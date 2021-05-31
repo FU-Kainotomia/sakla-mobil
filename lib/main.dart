@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:sakla/view/baseview/base_view.dart';
+import 'package:sakla/view/auth/view/splash_view.dart';
 
 import 'core/constants/navigation/navigation_constants.dart';
 import 'core/init/navigation/app_pages.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Sakla',
       initialRoute: NavigationConstants.INITIAL,
       theme: AppTheme.instance.darkTheme,
-      home: BaseView(),
+      home: SplashView(),
       getPages: AppPages.pages,
     );
   }

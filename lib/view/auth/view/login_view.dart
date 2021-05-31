@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
@@ -29,47 +30,49 @@ class LoginView extends StatelessWidget {
   Widget buildBody(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(context.height * 0.03),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: context.height / 5,
-          ),
-          buildTitle(),
-          SizedBox(
-            height: context.height / 15,
-          ),
-          buildTextFormFieldForEmail(),
-          SizedBox(
-            height: context.height / 40,
-          ),
-          buildTextFormFieldForPassword(context),
-          SizedBox(
-            height: context.height / 40,
-          ),
-          buildForgetPassButton(),
-          SizedBox(
-            height: context.height / 20,
-          ),
-          buildLoginButton(context)
-        ],
+      child: Form(
+        key: _controller.formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: context.height / 5,
+            ),
+            buildTitle(),
+            SizedBox(
+              height: context.height / 15,
+            ),
+            buildTextFormFieldForEmail(),
+            SizedBox(
+              height: context.height / 40,
+            ),
+            buildTextFormFieldForPassword(context),
+            SizedBox(
+              height: context.height / 40,
+            ),
+            buildLoginButton(context),
+            SizedBox(
+              height: context.height / 20,
+            ),
+            buildSignUpButton(context),
+          ],
+        ),
       ),
     );
   }
 
-  Widget buildForgetPassButton() {
-    return Align(
-      alignment: Alignment.topRight,
-      child: Material(
-        color: Colors.white.withOpacity(0.0),
-        child: InkWell(
-          onTap: () {},
-          child: Text(
-            '',
-            style: TextStyle(fontSize: 20, color: Color(0xff7781EB)),
-          ),
-        ),
-      ),
+  Widget buildSignUpButton(BuildContext context) {
+    return Center(
+      child: Text.rich(TextSpan(children: [
+        TextSpan(
+            text: 'If you dont have any account?',
+            style: TextStyle(color: Colors.white, fontSize: 17)),
+        TextSpan(
+            recognizer: TapGestureRecognizer()
+              ..onTap = () => _controller.navigateToSignUpView(),
+            text: ' Sign UP ',
+            style: TextStyle(color: Color(0xff7781EB), fontSize: 17)),
+      ])),
     );
   }
 
@@ -92,7 +95,6 @@ class LoginView extends StatelessWidget {
 
   Widget buildTextFormFieldForPassword(BuildContext context) {
     return Obx(() => TextFormField(
-          key: _controller.keyPass,
           controller: _controller.loginPassController,
           keyboardType: TextInputType.visiblePassword,
           validator: (String? input) {
@@ -129,11 +131,10 @@ class LoginView extends StatelessWidget {
 
   Widget buildTextFormFieldForEmail() {
     return TextFormField(
-      key: _controller.keyEmail,
       controller: _controller.loginEmailController,
       keyboardType: TextInputType.emailAddress,
       validator: (String? input) {
-        if (input!.isEmail) {
+        if (input!.length < 6) {
           return 'Please enter a valid email address !!!';
         }
       },
@@ -153,35 +154,39 @@ class LoginView extends StatelessWidget {
   }
 
   Widget buildLoginButton(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(50),
-      onTap: () {
-        _controller.navigateToBaseView();
-      },
-      child: Ink(
-        width: context.width / 1.1,
-        height: context.height / 16,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xff3B4183), Color(0xff515AB6)]),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              spreadRadius: 3,
-              blurRadius: 7,
-              offset: Offset(0, 3),
-            ),
-          ],
-          color: Color(0xffED7917),
+    return Obx(() => InkWell(
           borderRadius: BorderRadius.circular(50),
-        ),
-        child: Center(
-          child: Text('Login',
-              style: TextStyle(fontSize: 30, color: Colors.white)),
-        ),
-      ),
-    );
+          onTap: () {
+            _controller.login();
+          },
+          child: Ink(
+            width: context.width / 1.1,
+            height: context.height / 16,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [Color(0xff3B4183), Color(0xff515AB6)]),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 3,
+                  blurRadius: 7,
+                  offset: Offset(0, 3),
+                ),
+              ],
+              color: Color(0xffED7917),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: _controller.isLogin
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Center(
+                    child: Text('Login',
+                        style: TextStyle(fontSize: 30, color: Colors.white)),
+                  ),
+          ),
+        ));
   }
 }

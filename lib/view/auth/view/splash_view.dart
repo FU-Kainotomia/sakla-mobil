@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:sakla/core/constants/locale_cache_enum.dart';
+import 'package:sakla/core/init/cache/locale_manager.dart';
 
 import '../../../core/components/bezier_container.dart';
 import '../../../core/constants/navigation/navigation_constants.dart';
 import '../../../core/extension/context_extension.dart';
 
-class SplashView extends StatelessWidget {
+class SplashView extends StatefulWidget {
+  @override
+  _SplashViewState createState() => _SplashViewState();
+}
+
+class _SplashViewState extends State<SplashView> {
+  @override
+  void initState() {
+    super.initState();
+    asyncInitState();
+  }
+
+  Future<void>? asyncInitState() async {
+    final prefs = LocaleManager.instance;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +85,7 @@ class SplashView extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(50),
         onTap: () {
-          Get.toNamed(NavigationConstants.LOGIN);
+          Get.offAndToNamed(NavigationConstants.LOGIN);
         },
         child: Ink(
           width: context.width / 1.1,
@@ -102,7 +119,7 @@ class SplashView extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(50),
       onTap: () {
-        Get.toNamed(NavigationConstants.SIGN_UP);
+        Get.offAndToNamed(NavigationConstants.SIGN_UP);
       },
       child: Ink(
         height: context.height / 16,

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sakla/core/constants/navigation/navigation_constants.dart';
 import 'package:sakla/view/auth/controller/sign_up_controller.dart';
 import '../../../core/components/bezier_container.dart';
 import 'login_view.dart';
@@ -13,7 +14,7 @@ class SignUpView extends StatelessWidget {
       backgroundColor: Color(0xff1C1E3D),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          height: context.height,
           child: Stack(
             children: [
               Positioned(child: BezierContainer()),
@@ -26,40 +27,71 @@ class SignUpView extends StatelessWidget {
   }
 
   Widget buildBody(BuildContext context) {
-    return Padding(
+    return SingleChildScrollView(
       padding: EdgeInsets.all(context.height * 0.03),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: context.height / 15,
-          ),
-          buildTitle(),
-          SizedBox(
-            height: context.height / 15,
-          ),
-          buildTextFormFieldForEmail(),
-          SizedBox(
-            height: context.height / 40,
-          ),
-          buildTextFormFieldForPass(),
-          SizedBox(
-            height: context.height / 40,
-          ),
-          buildTextFormFieldForrRePass(),
-          SizedBox(
-            height: context.height / 20,
-          ),
-          buildPrivacyPolicyText(),
-          SizedBox(
-            height: context.height / 30,
-          ),
-          buildSignUpButton(context),
-          SizedBox(
-            height: context.height / 30,
-          ),
-          buildLoginPageButton(context)
-        ],
+      child: Form(
+        key: _controller.formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: context.height / 15,
+            ),
+            buildTitle(),
+            SizedBox(
+              height: context.height / 15,
+            ),
+            buildTextFormFieldForNameAndSurname(),
+            SizedBox(
+              height: context.height / 40,
+            ),
+            buildTextFormFieldForEmail(),
+            SizedBox(
+              height: context.height / 40,
+            ),
+            buildTextFormFieldForPass(),
+            SizedBox(
+              height: context.height / 40,
+            ),
+            buildTextFormFieldForrRePass(),
+            SizedBox(
+              height: context.height / 20,
+            ),
+            // buildPrivacyPolicyText(),
+            // SizedBox(
+            //   height: context.height / 30,
+            // ),
+            buildSignUpButton(context),
+            SizedBox(
+              height: context.height / 30,
+            ),
+            buildLoginPageButton(context)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextFormFieldForNameAndSurname() {
+    return TextFormField(
+      controller: _controller.signupNameAndSurnameController,
+      keyboardType: TextInputType.name,
+      validator: (input) {
+        if (input!.length < 4) {
+          return 'Please enter a valid name and surname !!!';
+        }
+      },
+      cursorColor: Colors.white,
+      style: TextStyle(color: Colors.white, fontSize: 20),
+      decoration: InputDecoration(
+        labelText: 'Name and Surname',
+        labelStyle: TextStyle(color: Colors.white),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Color(0xff404993)),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
       ),
     );
   }
@@ -72,8 +104,7 @@ class SignUpView extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: 17)),
         TextSpan(
             recognizer: TapGestureRecognizer()
-              ..onTap = () => Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => LoginView())),
+              ..onTap = () => Get.offAndToNamed(NavigationConstants.LOGIN),
             text: ' Login',
             style: TextStyle(color: Color(0xff7781EB), fontSize: 17)),
       ])),
@@ -106,42 +137,43 @@ class SignUpView extends StatelessWidget {
   }
 
   Widget buildSignUpButton(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(50),
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => LoginView()));
-      },
-      child: Ink(
-        width: MediaQuery.of(context).size.width / 1.1,
-        height: MediaQuery.of(context).size.height / 16,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xff3B4183), Color(0xff515AB6)]),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              spreadRadius: 3,
-              blurRadius: 7,
-              offset: Offset(0, 3),
-            ),
-          ],
-          color: Color(0xffED7917),
+    return Obx(() => InkWell(
           borderRadius: BorderRadius.circular(50),
-        ),
-        child: Center(
-          child: Text('Sign Up',
-              style: TextStyle(fontSize: 30, color: Colors.white)),
-        ),
-      ),
-    );
+          onTap: () {
+            _controller.signUp();
+          },
+          child: Ink(
+            width: MediaQuery.of(context).size.width / 1.1,
+            height: MediaQuery.of(context).size.height / 16,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [Color(0xff3B4183), Color(0xff515AB6)]),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 3,
+                  blurRadius: 7,
+                  offset: Offset(0, 3),
+                ),
+              ],
+              color: Color(0xffED7917),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: _controller.isSignUp
+                ? Center(child: CircularProgressIndicator())
+                : Center(
+                    child: Text('Sign Up',
+                        style: TextStyle(fontSize: 30, color: Colors.white)),
+                  ),
+          ),
+        ));
   }
 
   Widget buildTextFormFieldForrRePass() {
     return Obx(() => TextFormField(
           key: _controller.keyConfirmPass,
-          controller: _controller.signupConfirmPassController,
           keyboardType: TextInputType.visiblePassword,
           validator: (input) {
             if (input!.length < 6) {

@@ -23,7 +23,9 @@ class _PhotoViewState extends State<PhotoView> {
             flex: 4,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [buildPickedVideoButton(context)],
+              children: [
+                //buildPickedVideoButton(context)
+              ],
             ),
           )
         ],

@@ -12,3 +12,5 @@ class AppPages {
     GetPage(name: NavigationConstants.BASE, page: () => BaseView()),
   ];
 }
+
+

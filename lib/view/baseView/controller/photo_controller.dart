@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
@@ -12,7 +13,7 @@ class PhotoController extends GetxController {
 
     var request = await http.post(postUri, body: {
       'name_surname': '$path',
-      'email': 'mehmetalininmk@mehmetalininmk.dasdsa',
+      'email': 'dasd@asda.dasdsa',
       'password': 'path',
     });
     print(request.body);
@@ -25,15 +26,11 @@ class PhotoController extends GetxController {
     var imageFile = File(selectedFile!.path);
     List<int> imageBytes = imageFile.readAsBytesSync();
     var base64Image = base64Encode(imageBytes);
-    
-    var postUri = Uri.parse(
-        'https://expers-68-market-back-end.herokuapp.com/api/v1/createNewUserSakla');
 
-    var request = await http.post(postUri, body: {
-      'name_surname': '$base64Image',
-      'email': '.dasdsa',
-      'password': 'path',
-    });
+    var postUri = Uri.parse('a');
+    print(base64Image.length);
+    var request = await http.post(postUri, body: {});
+    print(request.body);
     print(request.statusCode);
   }
 }
