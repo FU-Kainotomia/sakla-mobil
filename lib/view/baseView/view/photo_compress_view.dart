@@ -5,12 +5,12 @@ import 'package:sakla/view/baseview/controller/photo_controller.dart';
 
 import '../../../core/components/app_bar_container.dart';
 
-class PhotoView extends StatefulWidget {
+class PhotoCompressView extends StatefulWidget {
   @override
-  _PhotoViewState createState() => _PhotoViewState();
+  _PhotoCompressViewState createState() => _PhotoCompressViewState();
 }
 
-class _PhotoViewState extends State<PhotoView> {
+class _PhotoCompressViewState extends State<PhotoCompressView> {
   final _controller = Get.put(PhotoController());
 
   @override

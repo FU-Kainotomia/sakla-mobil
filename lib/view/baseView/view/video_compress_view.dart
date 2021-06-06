@@ -8,12 +8,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:video_compress/video_compress.dart';
 import '../../../core/components/app_bar_container.dart';
 
-class VideoView extends StatefulWidget {
+class VideoCompressView extends StatefulWidget {
   @override
-  _VideoViewState createState() => _VideoViewState();
+  _VideoCompressViewState createState() => _VideoCompressViewState();
 }
 
-class _VideoViewState extends State<VideoView> {
+class _VideoCompressViewState extends State<VideoCompressView> {
   File? fileVideo;
   Uint8List? thumbnailBytes;
   int? videoSize;

@@ -1,9 +1,9 @@
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:sakla/view/baseview/view/photo_compress_view.dart';
 
-import '../../view/baseview/view/photo_view.dart';
 import '../../view/baseview/view/profile_view.dart';
-import '../../view/baseview/view/video_view.dart';
+import '../../view/baseview/view/video_compress_view.dart';
 
 enum SelectedTab { home, photo, video, myProfile }
 
@@ -34,5 +34,6 @@ class BaseViewConstants {
         ),
       ];
 
-  List<Widget> get allPage => [PhotoView(), VideoView(), ProfileView()];
+  List<Widget> get allPage =>
+      [PhotoCompressView(), VideoCompressView(), ProfileView()];
 }
