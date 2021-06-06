@@ -53,10 +53,7 @@ class LoginController extends GetxController {
             'password': 'widget.sessionID.toString()',
           });
 
-      // print(response.body);
-      // print(response.statusCode);
-      // responseBodyLength = response.body.length;
-
+      //TODO: change back end auth
       if (response.body.toString().length > 2) {
         userPassword = jsonDecode(response.body)[0]['password'].toString();
         userNameAndSurname =
@@ -72,8 +69,6 @@ class LoginController extends GetxController {
           changeSignUpStatus();
           Get.snackbar('Error', 'Wrong Email or Password');
         }
-      }else{
-        
       }
     }
   }

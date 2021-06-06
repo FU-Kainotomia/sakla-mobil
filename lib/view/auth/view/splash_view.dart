@@ -21,6 +21,11 @@ class _SplashViewState extends State<SplashView> {
 
   Future<void>? asyncInitState() async {
     final prefs = LocaleManager.instance;
+    if (prefs.getStringValue(PreferencesKeys.E_MAIL).isNotEmpty) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        Get.offAllNamed(NavigationConstants.BASE);
+      });
+    }
   }
 
   @override

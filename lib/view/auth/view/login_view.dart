@@ -133,8 +133,8 @@ class LoginView extends StatelessWidget {
     return TextFormField(
       controller: _controller.loginEmailController,
       keyboardType: TextInputType.emailAddress,
-      validator: (String? input) {
-        if (input!.length < 6) {
+      validator: (input) {
+        if (input!.length < 4 || !input.contains('@') || !input.contains('.')) {
           return 'Please enter a valid email address !!!';
         }
       },
