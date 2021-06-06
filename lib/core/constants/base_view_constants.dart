@@ -5,7 +5,7 @@ import 'package:sakla/view/baseview/view/photo_compress_view.dart';
 import '../../view/baseview/view/profile_view.dart';
 import '../../view/baseview/view/video_compress_view.dart';
 
-enum SelectedTab { home, photo, video, myProfile }
+//enum SelectedTab { home, photo, video, myProfile }
 
 class BaseViewConstants {
   static BaseViewConstants? _instance;
@@ -17,19 +17,19 @@ class BaseViewConstants {
   BaseViewConstants._init();
 
 //this list for battom navigation bar items
-  List<DotNavigationBarItem> get navigationBarItems => [
+  List<BottomNavigationBarItem> get navigationBarItems => [
         /// Photo
-        DotNavigationBarItem(
+        BottomNavigationBarItem(
           icon: Icon(Icons.photo),
         ),
 
         /// Video
-        DotNavigationBarItem(
+        BottomNavigationBarItem(
           icon: Icon(Icons.video_collection),
         ),
 
         /// Profile
-        DotNavigationBarItem(
+        BottomNavigationBarItem(
           icon: Icon(Icons.person),
         ),
       ];
